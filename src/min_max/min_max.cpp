@@ -11,6 +11,36 @@
 // Min and Max implementations:
 // https://www.geeksforgeeks.org/compute-the-minimum-or-maximum-max-of-two-integers-without-branching/
 
+// https://stackoverflow.com/questions/55109204/is-there-a-branchless-method-to-quickly-find-the-min-max-of-two-double-precision
+
+
+template<typename T>
+struct Std
+{
+    static T min(T x, T y)
+    {
+        return std::min(x, y);
+    }
+
+    static T max(T x, T y)
+    {
+        return std::max(x, y);
+    }
+};
+
+template<typename T>
+struct StdMinMax
+{
+    static T min(T x, T y)
+    {
+        return std::minmax(x, y).first;
+    }
+
+    static T max(T x, T y)
+    {
+        return std::minmax(x, y).second;
+    }
+};
 
 template<typename T>
 struct Ternary
@@ -77,6 +107,26 @@ struct Abs
     }
 };
 
+template<std::floating_point T>
+struct Abs<T>
+{
+    static T abs(T x, T y)
+    {
+        return std::abs(x - y);
+    }
+
+    static T min(T x, T y)
+    {
+        T a = abs(x, y);
+        return (x + y + a) / 2;
+    }
+
+    static T max(T x, T y)
+    {
+        T a = abs(x, y);
+        return (x + y - a) / 2;
+    }
+};
 
 
 template<typename T>
@@ -85,7 +135,6 @@ struct Stats
     T min = std::numeric_limits<T>::max();
     T max = std::numeric_limits<T>::min();
 };
-
 
 template<typename T, template<typename> class MinMax>
 struct StatsConsumer
@@ -105,7 +154,6 @@ struct StatsConsumer
         }
     }
 };
-
 
 template<typename T, template<typename> class Src, template<typename> class MinMax>
 static void BM_MinMax(benchmark::State& state)
@@ -139,8 +187,8 @@ static void BM_MinMax(benchmark::State& state)
     state.counters["ns/item"] = elapsed_total * 1000'000'000 / items_total;
 }
 
-static const int64_t min_vector_size = 10'000;
-static const int64_t max_vector_size = 10'000;
+static const int64_t min_vector_size = 100;
+static const int64_t max_vector_size = 100'000;
 static const int64_t range_multiplier = 10;
 
 #define BM_MIN_MAX(TYPE_ARG, SOURCE_ARG, CONSUMER_ARG) \
@@ -150,18 +198,18 @@ static const int64_t range_multiplier = 10;
     ->Range(min_vector_size, max_vector_size)
 
 
-#define TYPES (uint32_t, int32_t, uint64_t, int64_t)
+#define INT_TYPES (uint32_t, int32_t, uint64_t, int64_t)
+#define FLOAT_TYPES (float, double)
 #define SOURCES (falling_v, growing_v, const_v, random_v)
-#define MINMAX (Ternary, XorAnd, SubsShift, Abs)
+#define INT_MINMAX (Std, StdMinMax, Ternary, XorAnd, SubsShift, Abs)
+#define FLOAT_MINMAX (Std, StdMinMax, Ternary, Abs)
 
 
 #define CALL_BM_MIN_MAX(r, SEQ) APPLY_SEQ(BM_MIN_MAX, SEQ)
 
+APPLY_PRODUCT(CALL_BM_MIN_MAX, FLOAT_TYPES, SOURCES, FLOAT_MINMAX);
 
-APPLY_PRODUCT(CALL_BM_MIN_MAX, TYPES, SOURCES, MINMAX);
-
-
+APPLY_PRODUCT(CALL_BM_MIN_MAX, INT_TYPES, SOURCES, INT_MINMAX);
 
 
 BENCHMARK_MAIN();
-
