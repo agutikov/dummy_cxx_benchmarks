@@ -9,10 +9,12 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra")# -Werror")
 set(CMAKE_EXPORT_COMPILE_COMMANDS 1)
 
 
-add_subdirectory(googletest)
-add_subdirectory(benchmark)
+add_subdirectory(deps)
 
 #TODO: find boost preprocessor
+
+
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 
 add_subdirectory(src)
 

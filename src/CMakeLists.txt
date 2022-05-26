@@ -1,5 +1,8 @@
 
+link_libraries(benchmark::benchmark)
 
-add_executable(min_max_mean min_max_mean.cpp)
-target_link_libraries(min_max_mean benchmark::benchmark)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/lib)
+
+
+add_executable(min_max min_max.cpp)
 
