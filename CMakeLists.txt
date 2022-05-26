@@ -27,9 +27,6 @@ add_subdirectory(deps/benchmark)
 #find_package(Boost REQUIRED COMPONENTS all)
 
 
+enable_testing()
+
 add_subdirectory(src)
-
-
-
-
-

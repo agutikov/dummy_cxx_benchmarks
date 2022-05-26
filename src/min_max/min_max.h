@@ -1,6 +1,7 @@
 #pragma once
 
 #include <concepts>
+#include <ostream>
 #include <vector>
 #include <algorithm>
 #include <limits>
@@ -72,24 +73,30 @@ struct XorAnd
 template<typename T>
 struct SubsShift
 {
+    static constexpr size_t shift = sizeof(T) * 8 - 1;
+
     static T min(T x, T y)
     {
-        return y + ((x - y) & ((x - y) >> (sizeof(T) * 8 - 1)));
+        T d = x - y;
+        return y + (d & (d >> shift));
     }
 
     static T max(T x, T y)
     {
-        return x - ((x - y) & ((x - y) >> (sizeof(T) * 8 - 1)));
+        T d = x - y;
+        return x - (d & (d >> shift));
     }
 };
 
 template<typename T>
 struct Abs
 {
+    static constexpr size_t shift = sizeof(T) * 8 - 1;
+
     static T abs(T x, T y)
     {
         T sub = x - y;
-        T mask = (sub >> (sizeof(T)*8 - 1));
+        T mask = (sub >> shift);
         return (sub ^ mask) - mask;
     }
 
@@ -133,7 +140,20 @@ struct Stats
 {
     T min = std::numeric_limits<T>::max();
     T max = std::numeric_limits<T>::min();
+
+    bool operator==(const Stats& other) const
+    {
+        return other.min == min && other.max == max;
+    }
 };
+
+template<typename T>
+std::ostream& operator<<(std::ostream& os, const Stats<T>& s)
+{
+    os << "{" << ".min=" << s.min << ", .max=" << s.max << "}";
+    return os;
+}
+
 
 template<typename T, template<typename> class MinMax>
 struct StatsConsumer
