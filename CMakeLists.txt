@@ -11,7 +11,8 @@ if(NOT CMAKE_BUILD_TYPE)
       FORCE)
 endif(NOT CMAKE_BUILD_TYPE)
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Werror")
+set(CMAKE_CXX_FLAGS "-Wall -Wextra -Werror")
+set(CMAKE_CXX_FLAGS_RELEASE "-O2 -DNDEBUG")
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS 1)
 
@@ -24,7 +25,6 @@ add_subdirectory(deps/benchmark)
 
 
 #find_package(Boost REQUIRED COMPONENTS all)
-
 
 
 add_subdirectory(src)
