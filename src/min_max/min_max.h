@@ -134,6 +134,9 @@ struct Abs<T>
     }
 };
 
+template<typename T>
+class StdRangeMinMax {};
+
 
 template<typename T>
 struct Stats
@@ -172,5 +175,19 @@ struct StatsConsumer
         for (T v : range) {
             consume(v);
         }
+    }
+};
+
+template<typename T>
+struct StatsConsumer<T, StdRangeMinMax>
+{
+    Stats<T> stats;
+
+    template<std::ranges::range R>
+    void consume(R&& range)
+    {
+        const auto [min, max] = std::ranges::minmax_element(range);
+        stats.min = *min;
+        stats.max = *max;
     }
 };

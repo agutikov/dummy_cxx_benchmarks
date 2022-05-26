@@ -49,10 +49,10 @@ static void BM_MinMax(benchmark::State& state)
  */
 
 #define INT_TYPES (uint32_t, int32_t, uint64_t, int64_t)
-#define FLOAT_TYPES (float, double)
+#define FLOAT_TYPES (double, float)
 #define SOURCES (falling_v, growing_v, const_v, random_v)
-#define INT_MINMAX (Std, StdMinMax, Ternary, XorAnd, SubsShift, Abs)
-#define FLOAT_MINMAX (Std, StdMinMax, Ternary, Abs)
+#define INT_MINMAX (Ternary, StdRangeMinMax, Std, StdMinMax, XorAnd, SubsShift, Abs)
+#define FLOAT_MINMAX (Ternary, StdRangeMinMax, Std, StdMinMax, Abs)
 
 
 static const int64_t min_vector_size = 100;

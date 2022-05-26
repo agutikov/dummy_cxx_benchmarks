@@ -20,7 +20,11 @@ target_compile_options(min_max_2 PUBLIC "-O2")
 target_link_options(min_max_2 PUBLIC "-O2")
 
 add_executable(min_max_3 ${min_max_bench_src})
-target_compile_options(min_max_3 PUBLIC "-O3" "-march=native" "-mtune=native")
+target_compile_options(min_max_3 PUBLIC "-O3")
 target_link_options(min_max_3 PUBLIC "-O3")
+
+add_executable(min_max_4 ${min_max_bench_src})
+target_compile_options(min_max_4 PUBLIC "-O3" "-march=native" "-mtune=native")
+target_link_options(min_max_4 PUBLIC "-O3")
 
 
