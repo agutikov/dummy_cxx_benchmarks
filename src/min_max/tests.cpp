@@ -68,7 +68,7 @@ TEST(MinMax, random_double)
 {
     using value_type = double;
 
-    auto values = random_v<value_type>::generate(1);
+    auto values = Random<value_type>::generate(1);
 
     ASSERT_EQ(values.size(), 1);
 
@@ -82,7 +82,7 @@ TEST(MinMax, random_double)
     EXPECT_EQ(std_minmax.max, std_minmax.min);
     EXPECT_EQ(abs.max, abs.min);
 
-    values = random_v<value_type>::generate(vector_size);
+    values = Random<value_type>::generate(vector_size);
     auto v = values;
 
     ASSERT_EQ(values.size(), vector_size);
@@ -116,7 +116,7 @@ TEST(MinMax, random_int)
 {
     using value_type = int64_t;
 
-    auto values = random_v<value_type>::generate(1);
+    auto values = Random<value_type>::generate(1);
 
     ASSERT_EQ(values.size(), 1);
 
@@ -141,7 +141,7 @@ TEST(MinMax, random_int)
     EXPECT_EQ(subs_shift.max, subs_shift.min);
     EXPECT_EQ(abs.max, abs.min);
 
-    values = random_v<value_type>::generate(vector_size);
+    values = Random<value_type>::generate(vector_size);
     auto v = values;
 
     ASSERT_EQ(values.size(), vector_size);
@@ -183,7 +183,7 @@ TEST(MinMax, random_uint)
 {
     using value_type = uint64_t;
 
-    auto values = random_v<value_type>::generate(1);
+    auto values = Random<value_type>::generate(1);
 
     ASSERT_EQ(values.size(), 1);
 
@@ -201,7 +201,7 @@ TEST(MinMax, random_uint)
     EXPECT_EQ(subs_shift.max, subs_shift.min);
     EXPECT_EQ(abs.max, abs.min);
 
-    values = random_v<value_type>::generate(vector_size);
+    values = Random<value_type>::generate(vector_size);
     auto v = values;
 
     ASSERT_EQ(values.size(), vector_size);

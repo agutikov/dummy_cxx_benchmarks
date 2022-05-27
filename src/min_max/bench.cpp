@@ -50,7 +50,7 @@ static void BM_MinMax(benchmark::State& state)
 
 #define INT_TYPES (uint32_t, int32_t, uint64_t, int64_t)
 #define FLOAT_TYPES (double, float)
-#define SOURCES (falling_v, growing_v, const_v, random_v)
+#define SOURCES (Falling, Growing, Constant, Random)
 #define INT_MINMAX (Ternary, StdRangeMinMax, Std, StdMinMax, XorAnd, SubsShift, Abs)
 #define FLOAT_MINMAX (Ternary, StdRangeMinMax, Std, StdMinMax, Abs)
 

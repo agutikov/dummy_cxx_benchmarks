@@ -24,7 +24,7 @@ struct uniform_dist<T>
 static std::random_device rand_dev;
 
 template<typename T>
-struct random_v
+struct Random
 {
     static std::vector<T> generate(size_t size)
     {
@@ -40,7 +40,7 @@ struct random_v
 
 
 template<typename T>
-struct growing_v
+struct Growing
 {
     static std::vector<T> generate(size_t size)
     {
@@ -52,7 +52,7 @@ struct growing_v
 };
 
 template<typename T>
-struct falling_v
+struct Falling
 {
     static std::vector<T> generate(size_t size)
     {
@@ -64,7 +64,7 @@ struct falling_v
 };
 
 template<typename T>
-struct const_v
+struct Constant
 {
     static std::vector<T> generate(size_t size)
     {
